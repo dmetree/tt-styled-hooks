@@ -1,24 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-function App() {
+import Post from './components/Post'
+import Search from './components/Search'
+
+import { ArticlesList } from './components/elements/Elements'
+
+const App = () => {
+
+  const [posts, setPosts] = useState();
+  const [term, setTerm] = useState('');
+
+
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data)
+        setPosts(data)
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+
+
+  let postsLayout = <div>Loading...</div>
+
+  if (posts) {
+    let filterByTerm = posts.filter(post => {
+      return post.title.toLowerCase().includes(term.toLowerCase());
+    })
+
+    postsLayout = <ArticlesList className="">
+      {filterByTerm.map(post => (
+        <Post key={post.id}
+          post={post} />
+      ))}
+    </ArticlesList>
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Search
+        searchText={(text) => setTerm(text)} />
+      <div>{postsLayout}</div>
+
     </div>
   );
 }
