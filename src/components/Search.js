@@ -13,15 +13,13 @@ function Search({ searchText }) {
     }
 
     return (
-        <div className="">
-            <form onSubmit={onSubmit} className="">
-                <SearchField className="">
+        <div>
+            <form onSubmit={onSubmit}>
+                <SearchField>
                     <Input onChange={e => setText(e.target.value)}
-                        className=""
                         type="text"
                         placeholder="Search..."></Input>
                     <Button
-                        className=""
                         type="submit">Search</Button>
                 </SearchField>
             </form>

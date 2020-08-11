@@ -17,7 +17,6 @@ const App = () => {
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then(res => res.json())
       .then(data => {
-        // console.log(data)
         setPosts(data)
       })
       .catch(err => console.log(err));
@@ -32,7 +31,7 @@ const App = () => {
       return post.title.toLowerCase().includes(term.toLowerCase());
     })
 
-    postsLayout = <ArticlesList className="">
+    postsLayout = <ArticlesList>
       {filterByTerm.map(post => (
         <Post key={post.id}
           post={post} />
